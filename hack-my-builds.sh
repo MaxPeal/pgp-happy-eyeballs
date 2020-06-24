@@ -78,7 +78,7 @@ docker run -d \
 
 		# if we have a squignix host, we should use it!
 		if [ -n "$squignixHostname" ]; then
-			for host in "deb.debian.org" "snapshot.debian.org" "archive.ubuntu.com" "dl-cdn.alpinelinux.org"; do
+			for host in "deb.debian.org" "snapshot.debian.org" "archive.ubuntu.com" "dl-cdn.alpinelinux.org" "www.oberhumer.com" "www.zlib.net" "tukaani.org" "github.com"; do
 				cat >> /rawdns.json <<-EOF
 					"$host.": { "type": "static", "cnames": [ "$squignixHostname" ], "nameservers": [ "127.0.0.1" ] },
 				EOF
