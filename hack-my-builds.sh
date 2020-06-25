@@ -9,6 +9,20 @@ echo >&2
 
 set -x
 
+command_1=jq
+command_2=JSON.sh
+if command -v $command_1 > /dev/null; then
+	_jq() { jq "$@" }
+elif command -v $command_2 > /dev/null; then
+        #FIXME # find the right Options for JSON.sh
+	_jq() { JSON.sh "$@" }
+else
+	echo >&2
+	echo >&2 'WARNING: ABORT: You don't have either $command_1 nor $command_2; please install them'
+	echo >&2
+fi
+
+
 bip="$(ip address show dev docker0 | awk '$1 == "inet" { print $2; exit }')"
 [ -n "$bip" ]
 ip="${bip%/*}"
@@ -28,7 +42,7 @@ _sudo sh -xec '
 	[ -s /etc/docker/daemon.json ] || echo "{}" > /etc/docker/daemon.json
 '
 
-_sudo jq --arg bip "$bip" --arg ip "$ip" '
+_sudo _jq --arg bip "$bip" --arg ip "$ip" '
 		.bip = $bip
 		| .dns = [
 			$ip,
