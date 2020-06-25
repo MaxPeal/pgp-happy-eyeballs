@@ -18,7 +18,7 @@ elif command -v $command_2 > /dev/null; then
 	_jq() { JSON.sh "$@" }
 else
 	echo >&2
-	echo >&2 'WARNING: ABORT: You don't have either $command_1 nor $command_2; please install them'
+	echo >&2 "WARNING: ABORT: You don't have either $command_1 nor $command_2; please install them"
 	echo >&2
 fi
 
