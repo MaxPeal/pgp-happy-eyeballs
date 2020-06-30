@@ -9,16 +9,11 @@ echo >&2
 
 set -x
 
-command_1=jq
-command_2=JSON.sh
-if command -v $command_1 > /dev/null; then
+_jq=( command -v $hasCMD 2>/dev/null || hash -t $hasCMD 2>/dev/null || type -P $hasCMD 2>/dev/null || whence -p $hasCMD || echo >&2 "ERROR $hasCMD not found! ; exit 1 )
+
+if command -v _jq > /dev/null; then
 	_jq() {
 		 jq "$@"
-		}
-elif command -v $command_2 > /dev/null; then
-        #FIXME # find the right Options for JSON.sh
-	_jq() {
-		JSON.sh "$@"
 		}
 else
 	echo >&2
